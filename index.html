@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Pelayanan_SD_1.js"></script>
+        <script src="data/jalan_dps_selatan_2.js"></script>
+        <script src="data/sd_dps_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-8.735719444981957,115.1845861942292],[-8.64244371168705,115.27516732827742]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positron_0');
+        map.getPane('pane_Positron_0').style.zIndex = 400;
+        var layer_Positron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_0;
+        map.addLayer(layer_Positron_0);
+        function pop_Pelayanan_SD_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Jarak</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jangkauan awal</th>\
+                        <td>' + (feature.properties['FromBreak'] !== null ? autolinker.link(feature.properties['FromBreak'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jangkauan Akhir</th>\
+                        <td>' + (feature.properties['ToBreak'] !== null ? autolinker.link(feature.properties['ToBreak'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Pelayanan_SD_1_0(feature) {
+            switch(String(feature.properties['Name'])) {
+                case '0 - 400':
+                    return {
+                pane: 'pane_Pelayanan_SD_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,54,239,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '400 - 800':
+                    return {
+                pane: 'pane_Pelayanan_SD_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,218,37,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Pelayanan_SD_1');
+        map.getPane('pane_Pelayanan_SD_1').style.zIndex = 401;
+        map.getPane('pane_Pelayanan_SD_1').style['mix-blend-mode'] = 'normal';
+        var layer_Pelayanan_SD_1 = new L.geoJson(json_Pelayanan_SD_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Pelayanan_SD_1',
+            layerName: 'layer_Pelayanan_SD_1',
+            pane: 'pane_Pelayanan_SD_1',
+            onEachFeature: pop_Pelayanan_SD_1,
+            style: style_Pelayanan_SD_1_0,
+        });
+        bounds_group.addLayer(layer_Pelayanan_SD_1);
+        map.addLayer(layer_Pelayanan_SD_1);
+        function pop_jalan_dps_selatan_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">BLOK</th>\
+                        <td>' + (feature.properties['BLOK'] !== null ? autolinker.link(feature.properties['BLOK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Desa dan Kelurahan</th>\
+                        <td>' + (feature.properties['Desa_Lurah'] !== null ? autolinker.link(feature.properties['Desa_Lurah'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kecamatan</th>\
+                        <td>' + (feature.properties['Kecamatan'] !== null ? autolinker.link(feature.properties['Kecamatan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_jalan_dps_selatan_2_0() {
+            return {
+                pane: 'pane_jalan_dps_selatan_2',
+                opacity: 1,
+                color: 'rgba(152,125,183,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_jalan_dps_selatan_2');
+        map.getPane('pane_jalan_dps_selatan_2').style.zIndex = 402;
+        map.getPane('pane_jalan_dps_selatan_2').style['mix-blend-mode'] = 'normal';
+        var layer_jalan_dps_selatan_2 = new L.geoJson(json_jalan_dps_selatan_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_jalan_dps_selatan_2',
+            layerName: 'layer_jalan_dps_selatan_2',
+            pane: 'pane_jalan_dps_selatan_2',
+            onEachFeature: pop_jalan_dps_selatan_2,
+            style: style_jalan_dps_selatan_2_0,
+        });
+        bounds_group.addLayer(layer_jalan_dps_selatan_2);
+        map.addLayer(layer_jalan_dps_selatan_2);
+        function pop_sd_dps_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nama_SD'] !== null ? autolinker.link(feature.properties['Nama_SD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat SD</th>\
+                        <td>' + (feature.properties['Alamat'] !== null ? autolinker.link(feature.properties['Alamat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis SD</th>\
+                        <td>' + (feature.properties['Jenis'] !== null ? autolinker.link(feature.properties['Jenis'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Desa/Kelurahan</th>\
+                        <td>' + (feature.properties['Des_Kel'] !== null ? autolinker.link(feature.properties['Des_Kel'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_sd_dps_3_0() {
+            return {
+                pane: 'pane_sd_dps_3',
+                radius: 6.4,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+        }
+        function style_sd_dps_3_1() {
+            return {
+                pane: 'pane_sd_dps_3',
+                radius: 1.4,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_sd_dps_3');
+        map.getPane('pane_sd_dps_3').style.zIndex = 403;
+        map.getPane('pane_sd_dps_3').style['mix-blend-mode'] = 'normal';
+        var layer_sd_dps_3 = new L.geoJson.multiStyle(json_sd_dps_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_sd_dps_3',
+            layerName: 'layer_sd_dps_3',
+            pane: 'pane_sd_dps_3',
+            onEachFeature: pop_sd_dps_3,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_sd_dps_3_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_sd_dps_3_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_sd_dps_3);
+        map.addLayer(layer_sd_dps_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/sd_dps_3.png" /> sd_dps': layer_sd_dps_3,'<img src="legend/jalan_dps_selatan_2.png" /> jalan_dps_selatan': layer_jalan_dps_selatan_2,'Pelayanan_SD<br /><table><tr><td style="text-align: center;"><img src="legend/Pelayanan_SD_1_04000.png" /></td><td>0 - 400</td></tr><tr><td style="text-align: center;"><img src="legend/Pelayanan_SD_1_4008001.png" /></td><td>400 - 800</td></tr></table>': layer_Pelayanan_SD_1,"Positron": layer_Positron_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
